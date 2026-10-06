@@ -1,0 +1,6 @@
+import bcrypt from 'bcryptjs'
+import { pool } from '../config/db.js'
+
+export async function listUsers(req, res) { const [rows] = await pool.query('SELECT id, full_name, email, role, is_active, created_at FROM users ORDER BY created_at DESC'); res.json(rows) }
+export async function createUser(req, res) { const { fullName, email, password, role = 'user' } = req.body; const hash = await bcrypt.hash(password, 12); const [result] = await pool.query('INSERT INTO users (full_name, email, password_hash, role) VALUES (?, ?, ?, ?)', [fullName, email, hash, role]); res.status(201).json({ id: result.insertId, message: 'Đã tạo tài khoản.' }) }
+export async function updateUser(req, res) { const { fullName, role, isActive } = req.body; const [result] = await pool.query('UPDATE users SET full_name = ?, role = ?, is_active = ? WHERE id = ?', [fullName, role, isActive, req.params.id]); if (!result.affectedRows) return res.status(404).json({ message: 'Không tìm thấy tài khoản.' }); res.json({ message: 'Đã cập nhật tài khoản.' }) }

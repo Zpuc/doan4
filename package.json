@@ -1,0 +1,26 @@
+{
+  "name": "gundam-hub-storefront",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "dev:all": "concurrently -k -n FRONTEND,API -c cyan,yellow \"npm run dev\" \"npm --prefix server run dev\"",
+    "start:all": "concurrently -k -n FRONTEND,API -c cyan,yellow \"npm run preview\" \"npm --prefix server start\"",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^6.3.4",
+    "@vitejs/plugin-react": "latest",
+    "antd": "^6.6.4",
+    "axios": "^1.20.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-router-dom": "^7.18.4",
+    "vite": "latest"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}
